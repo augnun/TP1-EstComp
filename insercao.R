@@ -1,6 +1,6 @@
 #' Title insercao
 #'
-#' @param vetor de dados unidimensional
+#' @param vetor: vetor de dados unidimensional
 #'
 #' @return Para n > 1: Lista com data frame tab.resumo com o C(n) e M(n) para o vetor selecionado
 #'                     e o head (10 primeiras posições) do vetor ordenado
