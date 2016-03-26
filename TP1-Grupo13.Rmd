@@ -1,0 +1,27 @@
+---
+title: "Primeiro Trabalho Prático de Estatística Computacional"
+subtitle: "Métodos de Ordenação"
+author: 
+- "Alisson Monteiro"
+- "Augusto Cesar Ribeiro Nunes - 13/0103004"
+date: "26 de março de 2016"
+abstract: "Neste relatório analisamos a eficiência de três algoritmos de ordenação: Seleção, Inserção e _Quicksort_. Os algoritmos foram implementados na linguagem R, e em termos de eficiência, o algoritmo _Quicksort_ destacou-se, um resultado justificado pela sua complexidade computacional."
+output: pdf_document
+---
+
+# Introdução
+
+  Algoritmos de ordenação sempre foram de grande importância não só para a ciência, como também para a _vida prática_ dos cidadãos: e.g. os já aposentados catálogos telefônicos, ou as moderníssimas agendas dos nossos _smartphones_, seriam inúteis caso navegássemos ao acaso até encontrarmos o contato de interesse.
+  
+  Grandes expoentes da Academia, especialmente em áreas ligadas à Ciência da Computação, investigaram problemas e desenvolveram algoritmos de ordenação: Donald E. Knuth dedicou o 3o Volume de seu _The Art of Computer Programming_  à Ordenação e Busca, Edsger W. Dijkstra criou um famoso algoritmo que encontrava o melhor (mais curto) caminho entre dois nós de um grafo.
+  
+  Um dos pioneiros na construção de uma "máquina de ordenação semi-automática", o inventor norte-americano Herman Hollerith, que posteriormente seria sócio do truste que deu origem a uma das maiores empresas de Tecnologia da Informação da história, a ainda hoje extremamente relevante IBM.
+  
+  Na Estatística Não-Paramétrica, temos inúmeras medidas baseadas em Postos (_rank-based statistics_), que servem de instrumental para áreas diversas como Análise de Experimentos (Estatística Q de Cochran), Genética (_Rank Product Tests_) e Aprendizagem Automática (Máquinas de Suporte Vetorial). Grosso modo, Postos são _colocações_ atribuídas a posições de um vetor ordenado.
+  
+  Este trabalho tem como objetivo analisar a eficiência de três Algoritmos de Ordenação: Seleção, Inserção e _Quicksort_ para vetores de cinco tamanhos (__n__) diferentes: 10, 100, 1000, 10000 e 50000. Estes vetores serão apresentados em três configurações iniciais obtidos a partir da função _sample.int()_ do R: completamente aleatorizados, completamente ordenados utilizando a função _sort()_, e completamente desordenados utilizando a função _sort()_ com o argumento __decreasing = TRUE_. 
+  
+  Sabemos que com relação às suas ordens (notação O-Grande ou notação Assintótica), os algoritmos de Seleção e Inserção são $O(n^2)$, e o _Quicksort_, $O(n log n)$. Isso resulta a classificação dos dois primeiros como _ineficientes_ em relação ao terceiro, já que $log n < n$ para n relativamente pequeno independentemente da base em questão. Em outras palavras: para vetores _pequenos_, a (in)eficiência tem menor relevância, mas conforme o tamanho do vetor a ser ordenado cresce, o custo computacional pode explodir. Os algoritmos serão comparados entre si com a utilização de tabelas de eficiência absoluta e relativa, bem como gráficos de barras.
+  
+  As implementações dos algoritmos de ordenação encontram-se nos Anexos A, B e C. As funções foram documentadas utilizando o pacote __Roxygen__ do R. No Anexo D, temos os comandos utilizados para gerar os vetores aleatórios, com seus respectivos _seeds_ para garantir a reprodutibilidade dos resultados aqui obtidos. 
+  
