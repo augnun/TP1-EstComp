@@ -2,7 +2,7 @@
 #'
 #' @param vetor: um vetor de dados unidimensional
 #' @param esquerda: índice à esquerda a partir do qual deseja-se aplicar a ordenação
-#' @param direita índice à direita até onde deseja-se aplicar a ordenação
+#' @param direita: índice à direita até onde deseja-se aplicar a ordenação
 #'
 #' @return Para n > 1: Lista com data frame tab.resumo com o C(n) e M(n) para o vetor selecionado
 #'                     e o head (10 primeiras posições) do vetor ordenado
@@ -10,29 +10,25 @@
 #' @export
 #'
 #' @examples
-quicksort <- function(vetor, indice_esquerda = 1, indice_direita = length(vetor)){
-  if(indice_esquerda < indice_direita){
-    indice_pivo <- particionar(vetor,indice_esquerda, indice_direita)
-    quicksort(vetor, indice_esquerda, indice_pivo-1)
-    quicksort(vetor, indice_pivo + 1, indice_direita)
+quicksort <- function(vetor){
+  comparacoes <- 0
+  movimentacoes <- 0
+  if(length(vetor) <= 1){
+    return(vetor)
   }
-  return(vetor)
-}
-
-particionar <- function(vetor, indice_esquerda, indice_direita){
-  buffer <- 0 
-  superior <- vetor[indice_direita]
-  i = indice_esquerda - 1
-  for(j in indice_esquerda:(indice_direita-1)){
-    if(vetor[j]<=superior){
-      i <- i+1
-      vetor[i] <- buffer
-      vetor[i] <- vetor[j]
-      vetor[j] <- buffer
-    }
-  }
-  vetor[i+1] <- buffer
-  vetor[i+1] <- vetor[indice_direita]
-  vetor[indice_direita] <- vetor[i+1]
-  return(i+1)
+    pivo <- vetor[1] #toma como pivô o elemento na 1a posição
+    particao <- vetor[-1] #particiona no último elemento (pos -1) do vetor
+    
+    vetor_esquerda <- particao[particao < pivo]
+    comparacoes <- comparacoes + 1
+    vetor_direita <- particao[particao >= pivo]
+    comparacoes <- comparacoes + 1
+    
+    vetor_esquerda <- quicksort(vetor_esquerda)
+    vetor_direita <- quicksort(vetor_direita)
+    movimentacoes <- movimentacoes + 2
+    
+    
+    return(c(vetor_esquerda, pivo, vetor_direita))
+  
 }
