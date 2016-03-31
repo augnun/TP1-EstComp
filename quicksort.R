@@ -10,25 +10,19 @@
 #' @export
 #'
 #' @examples
-quicksort <- function(vetor){
-  comparacoes <- 0
-  movimentacoes <- 0
-  if(length(vetor) <= 1){
-    return(vetor)
-  }
-    pivo <- vetor[1] #toma como pivô o elemento na 1a posição
-    particao <- vetor[-1] #particiona no último elemento (pos -1) do vetor
+#' 
+comparacoes <- 0L
+movimentacoes <- 0L
+quicksort <- function(vetor,esq=1, dir=length(vetor),comparacoes=0, movimentacoes=0){
+  if(length(vetor)<2){
+    tab.resumo <- data.frame(resultado = c(comparacoes,movimentacoes),
+                             row.names = c("Número de Comparações: C(n)", "Número de movimentações: M(n)"))
+    return(list(tab.resumo))
+    # return(vetor)
     
-    vetor_esquerda <- particao[particao < pivo]
-    comparacoes <- comparacoes + 1
-    vetor_direita <- particao[particao >= pivo]
-    comparacoes <- comparacoes + 1
-    
-    vetor_esquerda <- quicksort(vetor_esquerda)
-    vetor_direita <- quicksort(vetor_direita)
-    movimentacoes <- movimentacoes + 2
-    
-    
-    return(c(vetor_esquerda, pivo, vetor_direita))
+  } 
+  pivo <- vetor[sample(length(vetor),1)]
+  return(c(quicksort(vetor[vetor<pivo],comparacoes = comparacoes+1, movimentacoes = movimentacoes+1),vetor[vetor==pivo],quicksort(vetor[vetor>pivo],comparacoes = comparacoes+1,movimentacoes = movimentacoes+1)))
+  
   
 }

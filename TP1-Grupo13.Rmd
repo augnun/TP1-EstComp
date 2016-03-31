@@ -2,12 +2,18 @@
 title: "Primeiro Trabalho Prático de Estatística Computacional"
 subtitle: "Métodos de Ordenação"
 author: 
-- "Alisson Monteiro"
+- "Alisson Moreira Ferreira - 11/0106946"
 - "Augusto Cesar Ribeiro Nunes - 13/0103004"
 date: "26 de março de 2016"
 abstract: "Neste relatório analisamos a eficiência de três algoritmos de ordenação: Seleção, Inserção e _Quicksort_. Os algoritmos foram implementados na linguagem R, e em termos de eficiência, o algoritmo _Quicksort_ destacou-se, um resultado justificado pela sua complexidade computacional."
 output: pdf_document
 ---
+
+```r
+require(ggplot2)
+require(microbenchmark)
+
+```
 
 # Introdução
 
@@ -24,4 +30,6 @@ output: pdf_document
   Sabemos que com relação às suas ordens (notação O-Grande ou notação Assintótica), os algoritmos de Seleção e Inserção são $O(n^2)$, e o _Quicksort_, $O(n log n)$. Isso resulta a classificação dos dois primeiros como _ineficientes_ em relação ao terceiro, já que $log n < n$ para n relativamente pequeno independentemente da base em questão. Em outras palavras: para vetores _pequenos_, a (in)eficiência tem menor relevância, mas conforme o tamanho do vetor a ser ordenado cresce, o custo computacional pode explodir. Os algoritmos serão comparados entre si com a utilização de tabelas de eficiência absoluta e relativa, bem como gráficos de barras.
   
   As implementações dos algoritmos de ordenação encontram-se nos Anexos A, B e C. As funções foram documentadas utilizando o pacote __Roxygen__ do R. No Anexo D, temos os comandos utilizados para gerar os vetores aleatórios, com seus respectivos _seeds_ para garantir a reprodutibilidade dos resultados aqui obtidos. 
+  
+```{r análise}
   
