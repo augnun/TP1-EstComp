@@ -9,7 +9,7 @@ abstract: "Neste relatório analisamos a eficiência de três algoritmos de orde
 output: pdf_document
 ---
 
-```r
+```{r preludio, echo=FALSE}
 require(ggplot2)
 require(microbenchmark)
 
@@ -25,11 +25,44 @@ require(microbenchmark)
   
   Na Estatística Não-Paramétrica, temos inúmeras medidas baseadas em Postos (_rank-based statistics_), que servem de instrumental para áreas diversas como Análise de Experimentos (Estatística Q de Cochran), Genética (_Rank Product Tests_) e Aprendizagem Automática (Máquinas de Suporte Vetorial). Grosso modo, Postos são _colocações_ atribuídas a posições de um vetor ordenado.
   
-  Este trabalho tem como objetivo analisar a eficiência de três Algoritmos de Ordenação: Seleção, Inserção e _Quicksort_ para vetores de cinco tamanhos (__n__) diferentes: 10, 100, 1000, 10000 e 50000. Estes vetores serão apresentados em três configurações iniciais obtidos a partir da função _sample.int()_ do R: completamente aleatorizados, completamente ordenados utilizando a função _sort()_, e completamente desordenados utilizando a função _sort()_ com o argumento __decreasing = TRUE_. 
+  Este trabalho tem como objetivo analisar a eficiência de três Algoritmos de Ordenação: Seleção, Inserção e _Quicksort_ para vetores de cinco tamanhos (__n__) diferentes: 10, 100, 1000, 10000 e 50000. Estes vetores serão apresentados em três configurações iniciais obtidos a partir da função _sample.int()_ do R: completamente aleatorizados, completamente ordenados utilizando a função `sort()`, e completamente desordenados utilizando a função _sort()_ com o argumento _decreasing = TRUE_. 
   
-  Sabemos que com relação às suas ordens (notação O-Grande ou notação Assintótica), os algoritmos de Seleção e Inserção são $O(n^2)$, e o _Quicksort_, $O(n log n)$. Isso resulta a classificação dos dois primeiros como _ineficientes_ em relação ao terceiro, já que $log n < n$ para n relativamente pequeno independentemente da base em questão. Em outras palavras: para vetores _pequenos_, a (in)eficiência tem menor relevância, mas conforme o tamanho do vetor a ser ordenado cresce, o custo computacional pode explodir. Os algoritmos serão comparados entre si com a utilização de tabelas de eficiência absoluta e relativa, bem como gráficos de barras.
+# Metodologia  
   
-  As implementações dos algoritmos de ordenação encontram-se nos Anexos A, B e C. As funções foram documentadas utilizando o pacote __Roxygen__ do R. No Anexo D, temos os comandos utilizados para gerar os vetores aleatórios, com seus respectivos _seeds_ para garantir a reprodutibilidade dos resultados aqui obtidos. 
+  Sabemos que com relação às suas ordens (notação O-Grande ou notação Assintótica), os algoritmos de Seleção e Inserção são $O(n^2)$, e o _Quicksort_, $O(n log n)$. Isso resulta a classificação dos dois primeiros como _ineficientes_ em relação ao terceiro, já que $log n < n$ para n relativamente pequeno independentemente da base em questão. Em outras palavras: para vetores _pequenos_, a (in)eficiência tem menor relevância, mas conforme o tamanho do vetor a ser ordenado cresce, o custo computacional pode explodir.
   
-```{r análise}
+## Escolha dos algoritmos
   
+  Em se tratando dos algoritmos de seleção e inserção e inserção, há pouca margem para a escolha de implementações mais ou menos eficientes. No caso do _quicksort_, preferimos uma implementacão que utiliza um dos trunfos do R, sua capacidade de _subsetting_ e de concatenação de vetores. 
+  
+## Um problema na implementação do quicksort()
+
+  Como foi pedido que se mostrasse o total de comparações e movimentações realizadas na ordenação, tivemos um problema graças à natureza recursiva do algoritmo em questão. Decidimos então por implementar duas versões, apenas alterando o tipo de retorno da função. A implementação eficiente retorna apenas o vetor ordenado, a ineficiente o número de comparações e movimentações __a cada__ recursão. O número real de movimentações/comparações feitas pelo algoritmo é o maior destes números apresentados. Entendemos que isso não é ideal pois o retorno de qualquer função deve ser o mais breve e informativo possível
+  
+  Os algoritmos serão comparados entre si com a utilização de tabelas de eficiência absoluta e relativa, bem como em boxplots para o caso de ordenação de vetores inicialmente não ordenados. O caso em que os vetores já são previamente ordenados é tratado separadamente em tabelas.
+  
+  As implementações dos algoritmos de ordenação encontram-se nos Anexos A, B e C. As funções foram documentadas utilizando o pacote __Roxygen__ do R. No Anexo D, temos os comandos utilizados para gerar os vetores aleatórios, com seus respectivos _seeds_ para garantir a reprodutibilidade dos resultados aqui obtidos.
+  
+# Análise  
+  
+```{r analise, echo = FALSE, cache=TRUE}
+resultado10.no <<- microbenchmark(selecao(vetor10),insercao(vetor10),quicksort(vetor10))
+
+boxplot(resultado10.no, main = "Comparação algoritmos de ordenação:\n vetor com n  = 10 (não ordenado)", xlab = "Algoritmo", ylab="log(tempo) [nanosegundos]")
+
+resultado100.no <<- microbenchmark(selecao(vetor100),insercao(vetor100),quicksort(vetor100))
+
+boxplot(resultado100.no, main = "Comparação algoritmos de ordenação:\n vetor com n  = 100 (não ordenado)", xlab = "Algoritmo", ylab="log(tempo) [nanosegundos]")
+
+resultado1000.no <<- microbenchmark(selecao(vetor1000),insercao(vetor1000),quicksort(vetor1000))
+
+boxplot(resultado1000.no, main = "Comparação algoritmos de ordenação:\n vetor com n  = 1000 (não ordenado)", xlab = "Algoritmo", ylab="log(tempo) [nanosegundos]")
+
+resultado10000.no <<- microbenchmark(selecao(vetor10000),insercao(vetor10000),quicksort(vetor10000))
+
+boxplot(resultado10000.no, main = "Comparação algoritmos de ordenação:\n vetor com n  = 10000 (não ordenado)", xlab = "Algoritmo", ylab="log(tempo) [nanosegundos]")
+
+resultado50000.no <<- microbenchmark(selecao(vetor50000),insercao(vetor50000),quicksort(vetor50000))
+
+boxplot(resultado50000.no, main = "Comparação algoritmos de ordenação:\n vetor com n  = 50000 (não ordenado)", xlab = "Algoritmo", ylab="log(tempo) [nanosegundos]")
+```
